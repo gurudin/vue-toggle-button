@@ -15,6 +15,12 @@
         @click="toggleButton(opt)">{{opt.label}}</button>
     </div>
 
+    <div
+      class="gurudin-toggle-switch gurudin-switch-lg"
+      :class="switchClass()"
+      v-if="mode == 'checkbox'"
+      @click="toggleSwitch"></div>
+
     <input type="hidden" :value="value">
   </span>
 </template>
@@ -48,6 +54,7 @@ export default {
     value: {
       type: null,
       required: true,
+      default: 0
     },
     /**
      * 选择数据
@@ -127,26 +134,89 @@ export default {
         } else {
           return this.value === opt.value ? 'btn-' + opt.checked : 'btn-' + this.toggle.unchecked;
         }
+      },
+      switchClass() {
+        var retClass = ' gurudin-switch-' + this.size;
+
+        if (this.value == 1 || this.value == true) {
+          // retClass += ' gurudin-checked bg-' + this.toggle.checked;
+          retClass += ' bg-' + this.toggle.checked;
+        } else {
+          retClass += ' bg-' + this.toggle.unchecked;
+        }
+        
+        return retClass;
       }
     };
   },
-  computed: {
-    
-  },
+  computed: { },
   methods: {
+    setValue(value) {
+      this.$emit('input', value);
+    },
     toggleButton(opt) {
       if (this.value == opt.value) {
         return false;
       }
 
-      this.$emit('input', opt.value);
+      this.setValue(opt.value);
+    },
+    toggleSwitch(event) {
+      if (this.options.length == 0) {
+        this.setValue(!this.value);
+      }
+
+      console.log(window.getComputedStyle(event.target, '::before').getPropertyValue('transform'));
+      window.getComputedStyle(event.target, '::before').setProperty('transform', 'matrix(1, 0, 0, 1, 45, 3)')
     }
   },
 }
 </script>
 
 <style>
-/* .fade-enter,.fade-leave-to{opacity:0;}
-.fade-enter-active,.fade-leave-active{transition:opacity .5s;} */
+.gurudin-toggle-switch {
+  /* background-color: rgb(191, 203, 217); */
+  border-radius: 999px;
+  display: inline-block;
+  position: relative;
+  outline: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.gurudin-toggle-switch::before {
+  display: block;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  transform: translate(3px,3px);
+  transition: transform .3s;
+  border-radius: 100%;
+  background-color: #fff;
+  content: "";
+}
+.gurudin-checked::before {
+  transform: translate(45px,3px);
+}
+
+.gurudin-switch-lg {
+  min-width: 80px;
+  min-height: 38px;
+}
+.gurudin-switch-lg::before {
+  width: 32px;
+  height: 32px;
+}
+
+.gurudin-switch-sm {
+  min-width: 50px;
+  min-height: 22px;
+}
+.gurudin-switch-sm::before {
+  width: 16px;
+  height: 16px;
+}
+
 </style>
 

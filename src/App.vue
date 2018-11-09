@@ -9,10 +9,11 @@
           v-model="toggle.value"
           :options="toggle.options"
           size="sm"></toggle-button>
+        {{toggle.value}}
       </div>
     </div>
     
-    <br>
+    <!--<br>
     <div class="row">
       <div class="col-sm-1">
         default
@@ -36,9 +37,34 @@
           size="lg"
           disabled></toggle-button>
       </div>
-    </div>
+    </div> -->
     <hr>
     
+    <div class="row">
+      <div class="col-sm-1">
+        sm
+      </div>
+      <div class="col-sm">
+        <toggle-button
+          mode="checkbox"
+          v-model="checkbox.value"
+          :options="checkbox.options"
+          size="sm"></toggle-button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-1">
+        lg
+      </div>
+      <div class="col-sm">
+        <toggle-button
+          mode="checkbox"
+          v-model="checkbox.value"
+          :options="checkbox.options"
+          size="lg"></toggle-button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -50,12 +76,24 @@ export default {
   data() {
     return {
       toggle: {
-        value: '',
+        value: 'primary',
         options: [
-          {label: "Left", value: 1, checked: "primary"},
-          {label: "Middle", value: 2, checked: "info"},
-          {label: "Right", value: 3}
+          {label: "Primary", value: 'primary', checked: "primary"},
+          {label: "Secondary", value: 'secondary', checked: "secondary"},
+          {label: "Success", value: 'success', checked: "success"},
+          {label: "Danger", value: 'danger', checked: "danger"},
+          {label: "Warning", value: 'warning', checked: "warning"},
+          {label: "Info", value: 'info', checked: "info"},
+          {label: "Light", value: 'light', checked: "light"},
+          {label: "Dark", value: 'dark', checked: "dark"},
         ],
+      },
+      checkbox: {
+        value: 0,
+        options: [
+          // {label: "Primary", value: 'primary', checked: "primary"},
+          // {label: "Secondary", value: 'secondary', checked: "secondary"},
+        ]
       },
     };
   },
