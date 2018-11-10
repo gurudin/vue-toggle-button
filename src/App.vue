@@ -8,12 +8,12 @@
         <toggle-button
           v-model="toggle.value"
           :options="toggle.options"
-          size="sm"></toggle-button>
-        {{toggle.value}}
+          size="sm"
+          @change="change"></toggle-button>
       </div>
     </div>
     
-    <!--<br>
+    <br>
     <div class="row">
       <div class="col-sm-1">
         default
@@ -37,7 +37,26 @@
           size="lg"
           disabled></toggle-button>
       </div>
-    </div> -->
+    </div>
+    
+    <br>
+    <div class="row">
+      <div class="col-sm-1">
+        select
+      </div>
+      <div class="col-sm-3">
+        <select class="form-control" v-model="toggle.value">
+          <option value="primary">Primary</option>
+          <option value="secondary">Secondary</option>
+          <option value="success">Success</option>
+          <option value="danger">Danger</option>
+          <option value="warning">Warning</option>
+          <option value="info">Info</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+    </div>
     <hr>
     
     <div class="row">
@@ -64,7 +83,7 @@
           mode="checkbox"
           v-model="checkbox.value"
           :options="[]"
-          :toggle='{checked: "warning", unchecked: "info"}'
+          :toggle='{checked: "danger", unchecked: "success"}'
           size="lg"></toggle-button>
       </div>
     </div>
@@ -128,6 +147,12 @@ export default {
         ]
       },
     };
+  },
+  methods: {
+    change(value) {
+      console.log(value);
+      return true;
+    }
   },
   components: {
     'toggle-button': ToggleButton

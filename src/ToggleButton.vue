@@ -210,6 +210,10 @@ export default {
   methods: {
     setValue(value) {
       this.$emit('input', value);
+      this.$emit('change', {
+        value: value,
+        srcEvent: event
+      });
     },
     toggleButton(opt) {
       if (this.value == opt.value) {
