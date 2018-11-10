@@ -98,7 +98,8 @@
           mode="checkbox"
           v-model="checkbox.value"
           :options='[{label: "On", value: 0}, {label: "Off", value: 1}]'
-          size="sm"></toggle-button>
+          size="sm"
+          :before="changeBefore"></toggle-button>
       </div>
     </div>
 
@@ -152,6 +153,9 @@ export default {
     change(value) {
       console.log(value);
       return true;
+    },
+    changeBefore(value) {
+      console.log(value);
     }
   },
   components: {

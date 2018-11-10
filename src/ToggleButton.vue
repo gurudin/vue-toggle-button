@@ -130,7 +130,21 @@ export default {
       type: Boolean,
       required: false,
       default: false
-    }
+    },
+    /**
+     * 改变前回调方法
+     *
+     * @type {Function}
+     *
+     * @required false
+     *
+     * @param value 改变后值
+     * @param event 当前对象
+     */
+    before: {
+      type: Function,
+      required: false,
+    },
   },
   data() {
     return {
@@ -209,11 +223,41 @@ export default {
   },
   methods: {
     setValue(value) {
-      this.$emit('input', value);
+      var isChange = true;
+
+      /**
+       * change function.
+       * 
+       * @param value Changed value.
+       * @param event Current object.
+       */
       this.$emit('change', {
         value: value,
-        srcEvent: event
+        event: event
       });
+
+      /**
+       * Change before function
+       * 
+       * @param value Changed value.
+       * @param event Current object.
+       * 
+       * @return Boolean
+       */
+      if (typeof this.before == 'function') {
+        let beforeRes = this.before({
+          value: value,
+          event: event
+        });
+
+        isChange = typeof beforeRes == 'undefined' || beforeRes == true ? true : false;
+        console.log(beforeRes);
+      }
+
+      // Change value.
+      if (isChange == true) {
+        this.$emit('input', value);
+      }
     },
     toggleButton(opt) {
       if (this.value == opt.value) {
