@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid" id="app">
+  <div class="container-fluid" id="app">   
     <div class="row">
       <div class="col-sm-1">
         sm
@@ -97,7 +97,7 @@
         <toggle-button
           mode="checkbox"
           v-model="checkbox.value"
-          :options='[{label: "On", value: 0}, {label: "Off", value: 1}]'
+          :options='[{label: "ON", value: 0}, {label: "OFF", value: 1}]'
           size="sm"
           :before="changeBefore"></toggle-button>
       </div>
@@ -115,6 +115,21 @@
           :options='checkbox.options'
           size="lg"
           disabled></toggle-button>
+      </div>
+    </div>
+
+    <br>
+    <div class="row">
+      <div class="col-sm-1">
+        Custom
+      </div>
+      <div class="col-sm">
+        <toggle-button
+          mode="checkbox"
+          v-model="checkbox.value"
+          :options='[{label: "灰色的安格", value: 0}, {label: "紫色", value: 1}]'
+          :toggle='{checked: "rgb(187, 153, 205)", unchecked: "rgb(191, 203, 217)"}'
+          size="sm"></toggle-button>
       </div>
     </div>
   </div>
@@ -156,6 +171,8 @@ export default {
     },
     changeBefore(value) {
       console.log(value);
+
+      return false;
     }
   },
   components: {

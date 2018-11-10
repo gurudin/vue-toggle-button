@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span data-name="toggle-button">
     <div
       class="btn-group"
       :class="size!='' ? 'btn-group-' + size : ''"
@@ -12,6 +12,7 @@
         class="btn"
         v-for="opt in options"
         :class="toggleClass(opt)"
+        :style="toggleStyle(opt)"
         @click="toggleButton(opt)">{{opt.label}}</button>
     </div>
 
@@ -155,6 +156,17 @@ export default {
           return this.value === opt.value ? 'btn-' + opt.checked : 'btn-' + this.toggle.unchecked;
         }
       },
+      toggleStyle(opt) {
+        if (opt.checked === undefined) {
+          return this.value === opt.value
+            ? {"background-color": this.toggle.checked}
+            : {"background-color": this.toggle.unchecked};
+        } else {
+          return this.value === opt.value
+            ? {"background-color": opt.checked}
+            : {"background-color": this.toggle.unchecked};
+        }
+      },
       switchClass() {
         var retClass = ' gurudin-switch-' + this.size;
 
@@ -178,8 +190,10 @@ export default {
         return '';
       }
       let maxLength = 0;
+      let maxString = '';
       this.options.forEach(row =>{
         maxLength = maxLength < row.label.length ? row.label.length : maxLength;
+        maxString = maxString.length < row.label.length ? row.label : maxString;
       });
 
       var retStyle = this.value ? {
@@ -189,14 +203,27 @@ export default {
         'text-align': 'right'
       };
 
-      if (this.size == 'lg') {
-        retStyle['width'] = maxLength * 20 + 'px';
-        retStyle['font-size'] = '16px';
+      if (this.value == 1 || this.value == true) {
+        retStyle['background-color'] = this.toggle.checked;
+      } else {
+        retStyle['background-color'] = this.toggle.unchecked;
+      }
+
+      let smWidth = 15;
+      let lgWidth = 15;
+      for (let i = 0; i < maxString.length; i++) {
+        let tmp = this.isChn(maxString[i]);
+        
+        smWidth += tmp ? 18 : 12;
+        lgWidth += tmp ? 20 : 15;
       }
 
       if (this.size == 'sm') {
-        retStyle['width'] = maxLength * 15 + 'px';
+        retStyle['width'] = smWidth + 'px';
         retStyle['font-size'] = '10px';
+      } else {
+        retStyle['width'] = lgWidth + 'px';
+        retStyle['font-size'] = '16px';
       }
 
       return retStyle;
@@ -222,6 +249,13 @@ export default {
     }
   },
   methods: {
+    isChn(temp){
+      var reg = /^([\u4e00-\u9fa5])+$/;
+
+      if (reg.test(temp)) return true ;
+      
+      return false;
+    },
     setValue(value) {
       var isChange = true;
 
@@ -251,7 +285,6 @@ export default {
         });
 
         isChange = typeof beforeRes == 'undefined' || beforeRes == true ? true : false;
-        console.log(beforeRes);
       }
 
       // Change value.
@@ -297,7 +330,6 @@ export default {
   top: 3px;
   left: 3px;
   z-index: 20;
-  /* transform: translate(3px,3px); */
   transition: transform .3s;
   border-radius: 100%;
   background-color: #fff;
@@ -305,7 +337,7 @@ export default {
 }
 
 .gurudin-switch-lg {
-  min-width: 80px;
+  min-width: 70px;
   min-height: 38px;
 }
 .gurudin-switch-lg i {
@@ -314,7 +346,7 @@ export default {
 }
 
 .gurudin-switch-sm {
-  min-width: 50px;
+  min-width: 40px;
   min-height: 22px;
 }
 .gurudin-switch-sm i {
@@ -324,7 +356,6 @@ export default {
 
 .gurudin-disabled {
   cursor: not-allowed;
-      /* cursor: not-allowed; */
   filter: alpha(opacity=65);
   -webkit-box-shadow: none;
   box-shadow: none;
