@@ -15,11 +15,17 @@
         @click="toggleButton(opt)">{{opt.label}}</button>
     </div>
 
+    <transition name="slide-fade">
     <div
       class="gurudin-toggle-switch gurudin-switch-lg"
       :class="switchClass()"
+      :style="switchStyle"
       v-if="mode == 'checkbox'"
-      @click="toggleSwitch"></div>
+      @click="toggleSwitch">
+        <span v-if="options.length > 0">{{switchValue}}</span>
+        <i :style="switchIStyle"></i>
+    </div>
+    </transition>
 
     <input type="hidden" :value="value">
   </span>
@@ -139,17 +145,68 @@ export default {
         var retClass = ' gurudin-switch-' + this.size;
 
         if (this.value == 1 || this.value == true) {
-          // retClass += ' gurudin-checked bg-' + this.toggle.checked;
           retClass += ' bg-' + this.toggle.checked;
         } else {
           retClass += ' bg-' + this.toggle.unchecked;
+        }
+
+        if (this.disabled) {
+          retClass += ' gurudin-disabled';
         }
         
         return retClass;
       }
     };
   },
-  computed: { },
+  computed: {
+    switchStyle() {
+      if (this.options.length == 0) {
+        return '';
+      }
+      let maxLength = 0;
+      this.options.forEach(row =>{
+        maxLength = maxLength < row.label.length ? row.label.length : maxLength;
+      });
+
+      var retStyle = this.value ? {
+        'text-align': 'left',
+        'font-size': '12px'
+      }: {
+        'text-align': 'right'
+      };
+
+      if (this.size == 'lg') {
+        retStyle['width'] = maxLength * 20 + 'px';
+        retStyle['font-size'] = '16px';
+      }
+
+      if (this.size == 'sm') {
+        retStyle['width'] = maxLength * 15 + 'px';
+        retStyle['font-size'] = '10px';
+      }
+
+      return retStyle;
+    },
+    switchIStyle() {
+      return this.value ? {
+        left: 'auto',
+        right: '30px',
+        transform: 'translateX(27px)'
+      } : { };
+    },
+    switchValue() {
+      if (this.options.length == 0) {
+        return '';
+      }
+
+      var ret = '';
+      if (this.options[0].value == this.value) {
+        return this.options[0].label;
+      } else {
+        return this.options[1].label;
+      }
+    }
+  },
   methods: {
     setValue(value) {
       this.$emit('input', value);
@@ -162,12 +219,7 @@ export default {
       this.setValue(opt.value);
     },
     toggleSwitch(event) {
-      if (this.options.length == 0) {
-        this.setValue(!this.value);
-      }
-
-      console.log(window.getComputedStyle(event.target, '::before').getPropertyValue('transform'));
-      window.getComputedStyle(event.target, '::before').setProperty('transform', 'matrix(1, 0, 0, 1, 45, 3)')
+      this.setValue(!this.value);
     }
   },
 }
@@ -175,36 +227,40 @@ export default {
 
 <style>
 .gurudin-toggle-switch {
-  /* background-color: rgb(191, 203, 217); */
   border-radius: 999px;
   display: inline-block;
   position: relative;
   outline: 0;
   box-sizing: border-box;
   cursor: pointer;
+  display: table;
 }
-.gurudin-toggle-switch::before {
+.gurudin-toggle-switch span {
+  display: table-cell;
+  vertical-align: middle;
+  color: white;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.gurudin-toggle-switch i {
   display: block;
   position: absolute;
   overflow: hidden;
-  top: 0;
-  left: 0;
+  top: 3px;
+  left: 3px;
   z-index: 20;
-  transform: translate(3px,3px);
+  /* transform: translate(3px,3px); */
   transition: transform .3s;
   border-radius: 100%;
   background-color: #fff;
   content: "";
-}
-.gurudin-checked::before {
-  transform: translate(45px,3px);
 }
 
 .gurudin-switch-lg {
   min-width: 80px;
   min-height: 38px;
 }
-.gurudin-switch-lg::before {
+.gurudin-switch-lg i {
   width: 32px;
   height: 32px;
 }
@@ -213,10 +269,19 @@ export default {
   min-width: 50px;
   min-height: 22px;
 }
-.gurudin-switch-sm::before {
+.gurudin-switch-sm i {
   width: 16px;
   height: 16px;
 }
 
+.gurudin-disabled {
+  cursor: not-allowed;
+      /* cursor: not-allowed; */
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  opacity: .65;
+  pointer-events: none;
+}
 </style>
 

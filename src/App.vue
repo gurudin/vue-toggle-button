@@ -48,11 +48,13 @@
         <toggle-button
           mode="checkbox"
           v-model="checkbox.value"
-          :options="checkbox.options"
+          :options="[]"
+          :toggle='{checked: "warning", unchecked: "info"}'
           size="sm"></toggle-button>
       </div>
     </div>
 
+    <br>
     <div class="row">
       <div class="col-sm-1">
         lg
@@ -61,8 +63,38 @@
         <toggle-button
           mode="checkbox"
           v-model="checkbox.value"
-          :options="checkbox.options"
+          :options="[]"
+          :toggle='{checked: "warning", unchecked: "info"}'
           size="lg"></toggle-button>
+      </div>
+    </div>
+
+    <br>
+    <div class="row">
+      <div class="col-sm-1">
+        sm
+      </div>
+      <div class="col-sm">
+        <toggle-button
+          mode="checkbox"
+          v-model="checkbox.value"
+          :options='[{label: "On", value: 0}, {label: "Off", value: 1}]'
+          size="sm"></toggle-button>
+      </div>
+    </div>
+
+    <br>
+    <div class="row">
+      <div class="col-sm-1">
+        lg
+      </div>
+      <div class="col-sm">
+        <toggle-button
+          mode="checkbox"
+          v-model="checkbox.value"
+          :options='checkbox.options'
+          size="lg"
+          disabled></toggle-button>
       </div>
     </div>
   </div>
@@ -91,8 +123,8 @@ export default {
       checkbox: {
         value: 0,
         options: [
-          // {label: "Primary", value: 'primary', checked: "primary"},
-          // {label: "Secondary", value: 'secondary', checked: "secondary"},
+          {label: "Primary", value: 0},
+          {label: "Secondary", value: 1},
         ]
       },
     };
