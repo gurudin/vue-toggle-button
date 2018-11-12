@@ -1,12 +1,13 @@
 'use strict'
-const path = require('path')
-const config = require('../config')
 const webpack = require('webpack')
+const config = require('../config')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
-module.exports = {
-  entry: './src/index.js',
+const webpackConfig = {
+  entry: {
+    app: './src/index.js'
+  },
   output: {
     path: config.build.assetsRoot,
     publicPath: '',
@@ -70,3 +71,5 @@ module.exports = {
     })
   ]
 }
+
+module.exports = webpackConfig
