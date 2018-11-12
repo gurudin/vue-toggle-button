@@ -1,4 +1,4 @@
-# vue-toggle-button
+# [docs for vue-toggle-button](https://gurudin.github.io/vue-toggle-button/) [![NPM version](https://img.shields.io/npm/v/vue-toggle-button.svg)](https://www.npmjs.com/package/vue-toggle-button)
 
 > VueJs for toggle button
 
