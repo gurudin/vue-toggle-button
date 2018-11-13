@@ -96,6 +96,8 @@ export default {
      * 
      * bootstrap3 default|primary|success|info|warning|danger
      * bootstrap4 primary|secondary|success|danger|warning|info|light|dark
+     * 
+     * 自定义颜色 rgb(187, 153, 205)|red|#000000
      */
     toggle: {
       type: Object,
