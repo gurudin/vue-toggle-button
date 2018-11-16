@@ -51,3 +51,23 @@ const vm = new Vue({
   }
 });
 ```
+
+## 按钮切换
+- #### 尺寸
+<img src="https://imgur.com/I5dr3iD.png" width="100">
+
+```
+<toggle-button size="sm"></toggle-button>
+```
+
+<img src="https://imgur.com/OcZZjuf.png" width="120">
+
+```
+<toggle-button size=""></toggle-button>
+```
+
+<img src="https://i.imgur.com/6fKzPAX.png" width="150">
+
+```
+<toggle-button :toggle='{checked: "info", unchecked: "dark"}'></toggle-button>
+```
