@@ -2,20 +2,52 @@
 
 > VueJs for toggle button
 
-## Build Setup
+## 安装 (Installation)
+- #### 添加包:
 
 ``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+$ yarn add vue-toggle-button
+```
+``` bash
+$ npm install vue-toggle-button
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+- #### 引入模块
+```
+import ToggleButton from "vue-toggle-button";
+```
+
+- #### 文件引入
+```
+<!-- CDNJS :: Vue (https://cdnjs.com/) -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.5.2/vue.min.js"></script>
+
+<!-- Require js -->
+<script src="//vue-toggle-button.min.js"></script>
+```
+
+- #### 示例
+<img src="https://i.imgur.com/h0bCTYT.png" width="160">
+
+```base
+# HTML
+<toggle-button
+  mode="checkbox"
+  v-model="value"
+  :options='options'></toggle-button>
+
+# JS
+Vue.component('toggle-button', VueToggleButton.toggleButton)
+const vm = new Vue({
+  el: "#app",
+  data() {
+    return {
+      options: [
+        {label: "Active", value: 'active'},
+        {label: "Deactive", value: 'deactive'}
+      ]
+      value: 'active'
+    };
+  }
+});
+```
