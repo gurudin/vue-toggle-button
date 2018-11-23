@@ -8,6 +8,7 @@
         <toggle-button
           v-model="toggle.value"
           :options="toggle.options"
+          :data="{}"
           size="sm"
           @change="change"></toggle-button>
       </div>

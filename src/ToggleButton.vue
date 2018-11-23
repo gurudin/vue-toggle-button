@@ -64,6 +64,18 @@ export default {
       default: 0
     },
     /**
+     * 回传数据 (透传数据)
+     *
+     * @type {mixed}
+     *
+     * @required false
+     */
+    data: {
+      type: null,
+      required: false,
+      default: ''
+    },
+    /**
      * 选择数据
      *
      * @type {Array}
@@ -269,7 +281,8 @@ export default {
        */
       this.$emit('change', {
         value: value,
-        event: event
+        event: event,
+        data: this.data
       });
 
       /**
@@ -283,7 +296,8 @@ export default {
       if (typeof this.before == 'function') {
         let beforeRes = this.before({
           value: value,
-          event: event
+          event: event,
+          data: this.data
         });
 
         isChange = typeof beforeRes == 'undefined' || beforeRes == true ? true : false;
