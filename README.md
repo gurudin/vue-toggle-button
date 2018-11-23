@@ -237,6 +237,18 @@ value: {
     default: 0
 },
 /**
+* 回传数据 (透传数据)
+*
+* @type {mixed}
+*
+* @required false
+*/
+data: {
+    type: null,
+    required: false,
+    default: ''
+},
+/**
 * 选择数据
 *
 * @type {Array}
